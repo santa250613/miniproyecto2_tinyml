@@ -212,7 +212,7 @@ function dibujaOnda(x){
 }
 
 // "Ave no registrada": gana la clase de rechazo, la mejor ave no llega al umbral, o casi no hubo sonido
-const NO_REG='ave-no-registrada', UMBRAL=0.60, PICO_MIN=0.02;
+const NO_REG='ave-no-registrada', UMBRAL=0.40, PICO_MIN=0.02;
 
 async function inferir(x){
   const f=mfccJS(x); // 1.274
@@ -227,26 +227,13 @@ async function inferir(x){
   const silencio=pico<PICO_MIN;
   const noRegistrada= silencio || mejor.c===NO_REG || mejor.p<UMBRAL;
 
-  // ── filtro de ruido exterior: el canto de ave varía en el tiempo (envolvente con picos);
-  //    la gente/motor/lluvia es constante o de banda ancha plana
-  const paso=160; let suma=0, nF=0, maxE=0, zcr=0; const env=[];
-  for(let i=0;i<x.length-paso;i+=paso){
-    let e=0; for(let j=0;j<paso;j++){e+=x[i+j]*x[i+j]; if((x[i+j]>=0)!==(x[i+j-1]>=0))zcr++;}
-    const r=Math.sqrt(e/paso); env.push(r); suma+=r; nF++; if(r>maxE)maxE=r;
-  }
-  const media=suma/nF;
-  let cv=0; for(const r of env) cv+=(r-media)*(r-media); cv=Math.sqrt(cv/nF)/(media+1e-9);
-  const rzcr=zcr/x.length;
-  const esRuido = !silencio && !noRegistrada && (cv<0.35 || (rzcr>0.4 && cv<0.8));
-
   pares=pares.filter(({c})=>c!==NO_REG);                 // las barras solo muestran las 6 aves
   if(noRegistrada) pares=pares.map(({c})=>({c,p:0}));   // nada registrado → todas en 0
   const info=AVES.find(a=>a.id===mejor.c)||{emoji:'❓',nombre:mejor.c};
   $('#resultado').classList.remove('oculto');
   $('#veredicto-txt').textContent= noRegistrada
     ? (silencio ? '🔇 Ave no registrada — no se escuchó nada' : '🚫 Ave no registrada')
-    : (esRuido ? '🌪️ Ruido detectado — no parece un canto de ave'
-               : `Es un ${info.nombre} (${(mejor.p*100)|0}%) ${info.emoji}`);
+    : `Es un ${info.nombre} (${(mejor.p*100)|0}%) ${info.emoji}`;
   const cont=$('#barras'); cont.innerHTML='';
   pares.forEach(({c,p:pr})=>{
     const info2=AVES.find(a=>a.id===c)||{nombre:c,emoji:''};
