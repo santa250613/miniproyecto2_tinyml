@@ -9,7 +9,7 @@ Uso:  python3 renombrar_export.py <export.zip o carpeta> [salida.zip]
 import re, sys, shutil, zipfile, tempfile, pathlib, collections
 
 CLASES = ['garrapatero-comun', 'pellar-comun', 'pigua',
-          'bichofue-griton', 'azulejo-comun', 'lora-andina']
+          'bichofue-griton', 'azulejo-comun', 'lora-andina', 'ave-no-registrada']
 PATRON = re.compile(r'^(?P<ave>[a-z\-]+?)-s(?P<ses>\d+)$', re.I)
 
 def main():

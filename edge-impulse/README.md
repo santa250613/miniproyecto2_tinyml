@@ -60,3 +60,18 @@ Si un día necesitas más audio público: **xeno-canto.org** tiene cantos reales
 3. Exportar (o bajar por API) y convertir: `python3 renombrar_export.py <export> dataset_aves_nano.zip` → nombres `<ave>_S<n>_<k>.wav` listos para el notebook.
 
 Limitación para la sustentación: la fuente son cantos reproducidos por parlante (no aves en vivo) y algunas sesiones repiten audios de origen.
+
+## Sesiones S4–S5 (27-oct): más aves + clase de rechazo grabada con el Nano
+
+Problema: la clase `ave-no-registrada` venía solo de YouTube (audio limpio) y las aves solo del Nano → el modelo podía separar "micrófono vs. limpio" en vez de cantos. Solución: grabar **las dos clases** con el Nano.
+
+```bash
+# API key en ~/.config/ei_api_key (chmod 600) y edge-impulse-daemon corriendo
+python3 grabar_auto.py <dataset_aves> --no-aves <carpeta con ave-no-registrada/> \
+        --sesiones "4:0.9,5:0.65" --clips 8 --clips-no-aves 15
+# si se corta: --clases <clase> --inicio <k> para continuar sin repetir
+python3 descargar_api.py dataset_nano_s45.zip --sesiones 4,5
+```
+
+- La reproducción pasa por `loudnorm` (ffmpeg) para que música y cantos suenen a nivel parecido (si no, la música saturaba el micrófono y eso sería otro atajo).
+- Resultado (leave-one-session-out, umbral 40 %): aves bien nombradas 34 % → 53 %; aves rechazadas por error 43 % → 19 %; no-aves rechazadas 78 %.
