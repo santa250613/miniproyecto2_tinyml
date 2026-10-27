@@ -55,7 +55,7 @@ $('#empezar').onclick=async()=>{
   ctx=new (window.AudioContext||window.webkitAudioContext)();
   const an=ctx.createAnalyser(); ctx.createMediaStreamSource(stream).connect(an);
   const buf=new Float32Array(an.fftSize);
-  chunks=[]; rec=new MediaRecorder(stream);
+  chunks=[]; rec=new MediaRecorder(stream,{audioBitsPerSecond:128000});   // misma calidad que la app
   rec.ondataavailable=e=>chunks.push(e.data);
   rec.onstop=()=>{
     const blob=new Blob(chunks,{type:rec.mimeType});

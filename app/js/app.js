@@ -179,7 +179,8 @@ $('#btn-grabar').onclick = async ()=>{
   try{
     // audio "crudo" como el del Nano: los filtros del celular borran parte del canto
     const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
-    const rec=new MediaRecorder(stream), chunks=[];
+    // 128 kbps: con la calidad por defecto (~32 kbps) la compresión borra detalle del canto
+    const rec=new MediaRecorder(stream,{audioBitsPerSecond:128000}), chunks=[];
     rec.ondataavailable=e=>chunks.push(e.data);
     rec.onstop=async ()=>{
       const blob=new Blob(chunks,{type:rec.mimeType});
