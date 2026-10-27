@@ -55,7 +55,9 @@
 
 ## 🚀 Cómo correr
 
-1. **Grabar el dataset** → seguir `edge-impulse/README.md` al pie de la letra.
+1. **Dataset** → dos vías:
+   - **Edge Impulse (recomendada)**: subir `dataset/dataset_aves.zip` en *Data acquisition → Uploader* y/o grabar clips propios según `edge-impulse/README.md`. La base de datos vive en EI, como el KWS.
+   - **Directa**: el Colab ya incluye `dataset/dataset_aves.zip` (80 clips xeno-canto, 20-23 por ave, 4 sesiones) — usa `DATA_URL = 'https://raw.githubusercontent.com/caesar-dat-com/aves-tinyml/main/dataset/dataset_aves.zip'` o ejecuta sin URL (paths locales).
 2. **Entrenar en Colab** → abrir `notebooks/02_entrenamiento_aves.ipynb` (Run all), descargar `modelo_aves.zip`.
 3. **Descomprimir** el zip en una carpeta temporal y **mover el contenido de `modelo_export/`** (model.json, group*.shard, labels.json) directamente a `app/modelo/` — app.js carga `modelo/model.json` y `modelo/labels.json`.
 4. **Abrir la app** → `python3 -m http.server` en `app/` (necesita servir por HTTP para el micrófono) → `http://localhost:8000`.
@@ -69,4 +71,4 @@
 
 ## 📜 Licencia / créditos
 
-Cantos de referencia: videos públicos de YouTube citados arriba. Dataset propio.
+Cantos de referencia: videos públicos de YouTube citados arriba. Clips del dataset: **xeno-canto.org** (grabaciones comunitarias CC, 4 por ave). Dataset propio.
