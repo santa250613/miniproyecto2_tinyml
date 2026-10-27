@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🐦 Modo Cazador — Cantos de Aves TinyML</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+</head>
+<body>
+
+<span class="float-bird" style="left:6%;top:22%">🦜</span>
+<span class="float-bird b2" style="top:48%">🕊️</span>
+<span class="float-bird b3" style="left:12%;top:74%">🐦</span>
+
+<header>
+  <h1><span class="flap">🦜</span> Modo Cazador</h1>
+  <p class="tagline">Escucha el canto · adivina cuál ave es · deja que la IA identifique con tu micrófono. 6 aves de Colombia en vivo 🌿</p>
+  <nav>
+    <button id="tab-quiz" class="tab activa">🦜 Modo Zoológico (quiz)</button>
+    <button id="tab-id" class="tab">🎯 Identificador IA</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ================= QUIZ ================= -->
+<section id="pane-quiz">
+  <div class="marcador">
+    <span>✅ Aciertos: <b id="aciertos">0</b></span>
+    <span>❌ Fallos: <b id="fallos">0</b></span>
+    <span>🔥 Racha: <b id="racha">0</b></span>
+  </div>
+
+  <div class="card ave-card" id="card-quiz">
+    <div id="ronda">
+      <p class="instruccion">🎧 Escucha el canto… ¿qué ave es?</p>
+      <div class="player-wrap">
+        <div id="player"></div>
+        <button id="btn-tocar" class="btn primario">▶ Tocar el canto</button>
+      </div>
+      <div class="opciones" id="opciones"></div>
+      <div id="feedback" class="feedback oculto"></div>
+      <button id="btn-siguiente" class="btn secundario oculto">Siguiente ronda ➡</button>
+    </div>
+    <div id="destapado" class="oculto">
+      <div class="ficha">
+        <div class="emoji-ave" id="ficha-emoji"></div>
+        <h2 id="ficha-nombre"></h2>
+        <p id="ficha-dato"></p>
+        <button id="btn-ver-video" class="btn secundario">🎬 Ver el ave cantando</button>
+        <button id="btn-revancha" class="btn primario">Revancha → nueva ronda</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= IDENTIFICADOR ================= -->
+<section id="pane-id" class="oculto">
+  <div class="card">
+    <p class="instruccion">🎯 Presiona grabar, acércate al ave (o pon el video), y mantén <b>3 segundos</b> de canto.</p>
+    <div class="grabadora">
+      <button id="btn-grabar" class="btn primario grande">🎙️ Grabar 3 s</button>
+      <div id="estado-mic" class="estado">El modelo IA aún no está cargado.</div>
+    </div>
+    <canvas id="onda" width="640" height="90"></canvas>
+    <div id="resultado" class="oculto">
+      <div class="veredicto">🎯 <span id="veredicto-txt"></span></div>
+      <div id="barras"></div>
+    </div>
+  </div>
+  <div class="card aves-grid" id="grid-aves"></div>
+</section>
+
+</main>
+
+<footer>
+  <p>Método KWS (MFCC 25/10 ms · 40 mel · 13 coeficientes · 1.274 features → MLP 64) · IA para Móviles UAO 2026-2 · Sebastián Santana · 🌿 cantos con licencia CC de xeno-canto.org</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

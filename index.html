@@ -3,82 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>🐦 Modo Cazador — Cantos de Aves TinyML</title>
+<title>Cantos de Aves · TinyML — IA para Móviles UAO</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+<meta http-equiv="refresh" content="6; url=app/index.html">
+<style>
+  :root{--hoja:#57b46f;--sol:#f2c14e;--texto:#eaf4ea}
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;font-family:'Quicksand','Segoe UI',sans-serif;color:var(--texto);
+    background:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1800&q=80') center/cover fixed,#0b1f14;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+  }
+  body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,24,14,.55),rgba(11,31,20,.9))}
+  .v{max-width:520px;padding:24px;background:rgba(14,40,25,.72);backdrop-filter:blur(12px);border:1px solid rgba(87,180,111,.5);border-radius:22px;margin:16px}
+  h1{margin:0 0 6px;font-size:30px;color:var(--sol)}
+  p{opacity:.9;font-size:15px}
+  a{color:var(--sol);font-weight:bold;text-decoration:none}
+  .btn{display:inline-block;margin:10px 6px 0;padding:12px 22px;border-radius:26px;background:linear-gradient(135deg,#f7d268,var(--sol));color:#4a2e00;font-weight:bold}
+  .alt{background:rgba(0,0,0,.25);border:1.5px solid var(--hoja);color:var(--texto)}
+  code{background:rgba(0,0,0,.35);padding:1px 6px;border-radius:6px;font-size:13px}
+</style>
 </head>
 <body>
-
-<span class="float-bird" style="left:6%;top:22%">🦜</span>
-<span class="float-bird b2" style="top:48%">🕊️</span>
-<span class="float-bird b3" style="left:12%;top:74%">🐦</span>
-
-<header>
-  <h1><span class="flap">🦜</span> Modo Cazador</h1>
-  <p class="tagline">Escucha el canto · adivina cuál ave es · deja que la IA identifique con tu micrófono. 6 aves de Colombia en vivo 🌿</p>
-  <nav>
-    <button id="tab-quiz" class="tab activa">🦜 Modo Zoológico (quiz)</button>
-    <button id="tab-id" class="tab">🎯 Identificador IA</button>
-  </nav>
-</header>
-
-<main>
-
-<!-- ================= QUIZ ================= -->
-<section id="pane-quiz">
-  <div class="marcador">
-    <span>✅ Aciertos: <b id="aciertos">0</b></span>
-    <span>❌ Fallos: <b id="fallos">0</b></span>
-    <span>🔥 Racha: <b id="racha">0</b></span>
-  </div>
-
-  <div class="card ave-card" id="card-quiz">
-    <div id="ronda">
-      <p class="instruccion">🎧 Escucha el canto… ¿qué ave es?</p>
-      <div class="player-wrap">
-        <div id="player"></div>
-        <button id="btn-tocar" class="btn primario">▶ Tocar el canto</button>
-      </div>
-      <div class="opciones" id="opciones"></div>
-      <div id="feedback" class="feedback oculto"></div>
-      <button id="btn-siguiente" class="btn secundario oculto">Siguiente ronda ➡</button>
-    </div>
-    <div id="destapado" class="oculto">
-      <div class="ficha">
-        <div class="emoji-ave" id="ficha-emoji"></div>
-        <h2 id="ficha-nombre"></h2>
-        <p id="ficha-dato"></p>
-        <button id="btn-ver-video" class="btn secundario">🎬 Ver el ave cantando</button>
-        <button id="btn-revancha" class="btn primario">Revancha → nueva ronda</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= IDENTIFICADOR ================= -->
-<section id="pane-id" class="oculto">
-  <div class="card">
-    <p class="instruccion">🎯 Presiona grabar, acércate al ave (o pon el video), y mantén <b>3 segundos</b> de canto.</p>
-    <div class="grabadora">
-      <button id="btn-grabar" class="btn primario grande">🎙️ Grabar 3 s</button>
-      <div id="estado-mic" class="estado">El modelo IA aún no está cargado.</div>
-    </div>
-    <canvas id="onda" width="640" height="90"></canvas>
-    <div id="resultado" class="oculto">
-      <div class="veredicto">🎯 <span id="veredicto-txt"></span></div>
-      <div id="barras"></div>
-    </div>
-  </div>
-  <div class="card aves-grid" id="grid-aves"></div>
-</section>
-
-</main>
-
-<footer>
-  <p>Método KWS (MFCC 25/10 ms · 40 mel · 13 coeficientes · 1.274 features → MLP 64) · IA para Móviles UAO 2026-2 · Sebastián Santana · 🌿 cantos con licencia CC de xeno-canto.org</p>
-</footer>
-
-<script src="js/app.js"></script>
+<div class="v">
+  <h1>🦜 Cantos de Aves · TinyML</h1>
+  <p>Miniproyecto 2 · IA para Móviles UAO · Sebastián Santana<br>
+  6 aves · MFCC + MLP · quiz + identificador por micrófono</p>
+  <a class="btn" href="app/index.html">▶ Abrir el Modo Cazador</a>
+  <a class="btn alt" href="notebooks/02_entrenamiento_aves.ipynb">📓 Notebook Colab</a>
+  <p style="margin-top:14px;font-size:12px;opacity:.7">Te lleva al app en unos segundos… · carpeta con todo: <code>app/</code></p>
+</div>
+<script>setTimeout(()=>location.href='app/index.html',1500)</script>
 </body>
 </html>
