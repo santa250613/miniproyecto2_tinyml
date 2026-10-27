@@ -3,6 +3,8 @@
 **▶▶▶ VER LA APP FUNCIONANDO (click aquí):**
 ### 👉 https://santa250613.github.io/miniproyecto2_tinyml/
 
+📓 Notebook de entrenamiento (Google Colab): https://colab.research.google.com/github/santa250613/miniproyecto2_tinyml/blob/main/notebooks/02_entrenamiento_aves.ipynb
+
 Ese link abre la app publicada (GitHub Pages) — desafío de aves 🦜 + identificador por micrófono 🎯. Solo clic, no hay que instalar nada.
 
 ---
@@ -32,6 +34,6 @@ python3 -m http.server 8000
 - `index.html` — la app (2 pestañas)
 - `css/style.css` — tema selva 🌿
 - `js/app.js` — lógica: desafío + MFCC en JavaScript + TF.js
-- `modelo/` — *(se agrega después)* model.json + labels.json, entrenados en el Colab
+- `modelo/` — ✅ modelo ya entrenado (model.json + labels.json + pesos tfjs, 91 clips)
 
 IA para Móviles · UAO 2026-2 · Sebastián Santana · audios CC de xeno-canto.org
