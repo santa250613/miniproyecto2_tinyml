@@ -169,7 +169,8 @@ $('#btn-grabar').onclick = async ()=>{
   if(!navigator.mediaDevices){alert('Este navegador no da acceso al micrófono. Usa Chrome + HTTPS o localhost.');return;}
   const btn=$('#btn-grabar'); btn.disabled=true;
   try{
-    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:true}});
+    // audio "crudo" como el del Nano: los filtros del celular borran parte del canto
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
     const rec=new MediaRecorder(stream), chunks=[];
     rec.ondataavailable=e=>chunks.push(e.data);
     rec.onstop=async ()=>{
@@ -243,6 +244,25 @@ async function inferir(x){
       `<div class="barra"><div class="nombre"><span>${info2.emoji} ${info2.nombre}</span><span>${(pr*100).toFixed(1)}%</span></div>
        <div class="pista"><div class="lleno" style="width:${(pr*100)|0}%"></div></div></div>`);
   });
+  if(DEBUG) mostrarDiagnostico(x, probs, pico);
+}
+
+/* ---- modo diagnóstico: abrir la página con ?debug=1 (la app normal no cambia) ---- */
+const DEBUG=new URLSearchParams(location.search).has('debug');
+function wav16k(x){ // Float32 [-1,1] → WAV PCM 16 bits mono 16 kHz
+  const b=new ArrayBuffer(44+x.length*2), v=new DataView(b), s=(o,t)=>[...t].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+  s(0,'RIFF'); v.setUint32(4,36+x.length*2,true); s(8,'WAVEfmt '); v.setUint32(16,16,true); v.setUint16(20,1,true);
+  v.setUint16(22,1,true); v.setUint32(24,SR,true); v.setUint32(28,SR*2,true); v.setUint16(32,2,true); v.setUint16(34,16,true);
+  s(36,'data'); v.setUint32(40,x.length*2,true);
+  for(let i=0;i<x.length;i++) v.setInt16(44+i*2,Math.max(-1,Math.min(1,x[i]))*32767,true);
+  return new Blob([b],{type:'audio/wav'});
+}
+function mostrarDiagnostico(x, probs, pico){
+  const txt=etiquetas.clases.map((c,i)=>`${c}: ${(probs[i]*100).toFixed(1)}%`).join(' · ');
+  const url=URL.createObjectURL(wav16k(x)), nombre=`grabacion_${Date.now()}.wav`;
+  $('#barras').insertAdjacentHTML('beforeend',
+    `<p style="font-size:.8em;opacity:.85;margin-top:.8em">🛠️ pico ${pico.toFixed(3)} · ${(x.length/SR).toFixed(1)} s<br>${txt}<br>
+     <a href="${url}" download="${nombre}">⬇️ Descargar audio grabado</a></p>`);
 }
 
 /* ================= fichas del identificador ================= */
