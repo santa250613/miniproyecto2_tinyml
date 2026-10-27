@@ -211,6 +211,9 @@ function dibujaOnda(x){
   g.stroke();
 }
 
+// "Ave no registrada": gana la clase de rechazo, la mejor ave no llega al umbral, o casi no hubo sonido
+const NO_REG='ave-no-registrada', UMBRAL=0.60, PICO_MIN=0.02;
+
 async function inferir(x){
   const f=mfccJS(x); // 1.274
   const mu=etiquetas.mu, sd=etiquetas.sd;
@@ -218,11 +221,18 @@ async function inferir(x){
   const t=tf.tensor2d([input]);
   const p=modelo.predict(t); t.dispose();
   const probs=(await p.data()); p.dispose();
-  const pares=etiquetas.clases.map((c,i)=>({c,p:probs[i]})).sort((a,b)=>b.p-a.p);
+  let pares=etiquetas.clases.map((c,i)=>({c,p:probs[i]})).sort((a,b)=>b.p-a.p);
   const mejor=pares[0];
+  let pico=0; for(let i=0;i<x.length;i++) pico=Math.max(pico,Math.abs(x[i]));
+  const silencio=pico<PICO_MIN;
+  const noRegistrada= silencio || mejor.c===NO_REG || mejor.p<UMBRAL;
+  pares=pares.filter(({c})=>c!==NO_REG);                 // las barras solo muestran las 6 aves
+  if(noRegistrada) pares=pares.map(({c})=>({c,p:0}));   // nada registrado → todas en 0
   const info=AVES.find(a=>a.id===mejor.c)||{emoji:'❓',nombre:mejor.c};
   $('#resultado').classList.remove('oculto');
-  $('#veredicto-txt').textContent=`Es un ${info.nombre} (${(mejor.p*100)|0}%) ${info.emoji}`;
+  $('#veredicto-txt').textContent= noRegistrada
+    ? (silencio ? '🔇 Ave no registrada — no se escuchó nada' : '🚫 Ave no registrada')
+    : `Es un ${info.nombre} (${(mejor.p*100)|0}%) ${info.emoji}`;
   const cont=$('#barras'); cont.innerHTML='';
   pares.forEach(({c,p:pr})=>{
     const info2=AVES.find(a=>a.id===c)||{nombre:c,emoji:''};
