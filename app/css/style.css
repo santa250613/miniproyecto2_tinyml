@@ -52,7 +52,8 @@ body{
 body::before{
   content:'';position:fixed;inset:0;z-index:-3;pointer-events:none;
   background:
-    url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1800&q=75') center/cover no-repeat,
+    /* Valle de Cocora, Quindío — Bernard Gagnon, CC BY-SA 4.0 (Wikimedia Commons) */
+    url('../img/fondo-cocora.jpg') center 40%/cover no-repeat,
     radial-gradient(120% 70% at 20% 0%,#2a6a42 0%,transparent 60%),
     radial-gradient(90% 60% at 100% 100%,#1d4a30 0%,transparent 65%),
     linear-gradient(170deg,#173d27 0%,#0b1f14 55%,#06140c 100%);
@@ -62,8 +63,8 @@ body::before{
 body::after{
   content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(80% 45% at 50% -5%,rgba(220,240,225,.16),transparent 70%),
-    linear-gradient(180deg,rgba(6,24,14,.50) 0%,rgba(8,28,17,.72) 40%,rgba(6,20,12,.92) 100%);
+    radial-gradient(80% 45% at 50% -5%,rgba(220,240,225,.10),transparent 70%),
+    linear-gradient(180deg,rgba(6,24,14,.62) 0%,rgba(8,28,17,.70) 35%,rgba(6,20,12,.90) 100%);
 }
 
 /* ---------- aves flotando (decorativas, nunca tapan clics) ---------- */
@@ -317,6 +318,7 @@ main{max-width:800px;margin:0 auto;padding:12px 16px 36px}
 /* ---------- pie ---------- */
 footer{text-align:center;font-size:12px;color:var(--texto-suave);padding:10px 16px 28px;max-width:720px;margin:0 auto}
 footer p{margin:0;opacity:.8}
+footer .credito{margin-top:6px;font-size:11px;opacity:.6}
 
 /* ---------- hover solo en dispositivos con mouse (evita hover pegado en celular) ---------- */
 @media (hover:hover){
