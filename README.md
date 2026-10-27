@@ -58,7 +58,7 @@
 1. **Dataset** → dos vías:
    - **Edge Impulse (recomendada)**: subir el dataset zip del repo (`dataset/dataset_aves_nano.zip`, 91 clips 15-16 por ave) a *Data acquisition → Uploader* y grabar clips propios según `edge-impulse/README.md`. La base de datos vive en EI, como el KWS.
    - **Directa**: el zip ya está en el repo — tu dataset nuevo (`dataset/dataset_aves_nano.zip`, 91 clips, 16 kHz, ~15-16 por ave): usa `DATA_URL = 'https://raw.githubusercontent.com/santa250613/miniproyecto2_tinyml/main/dataset/dataset_aves_nano.zip'` (o el de 80 clips: `.../dataset/dataset_aves.zip`), o ejecuta sin URL (paths locales).
-2. **Entrenar en Colab** → abrir `notebooks/02_entrenamiento_aves.ipynb` (Run all), descargar `modelo_aves.zip`.
+2. **Entrenar en Colab** → [abrir el notebook en Colab](https://colab.research.google.com/github/santa250613/miniproyecto2_tinyml/blob/main/notebooks/02_entrenamiento_aves.ipynb) → Entorno de ejecución → Ejecutar todo (descarga solo los 6 zips de `dataset/`) → se descarga `modelo_aves.zip`.
 3. **Descomprimir** el zip en una carpeta temporal y **mover el contenido de `modelo_export/`** (model.json, group*.shard, labels.json) directamente a `app/modelo/` — app.js carga `modelo/model.json` y `modelo/labels.json`.
 4. **Abrir la app** → `python3 -m http.server` en `app/` (necesita servir por HTTP para el micrófono) → `http://localhost:8000`.
 5. O publicar con **GitHub Pages** → la app queda en línea para la demo.
