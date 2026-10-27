@@ -2,6 +2,5 @@
 __pycache__/
 modelo_export/
 modelo_aves.zip
-dataset_aves.zip
 data/
 .DS_Store
