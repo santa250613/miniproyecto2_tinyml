@@ -1,103 +1,364 @@
-/* ============ CANTOS DE AVES · TEMA SELVA ============ */
-:root{
-  --selva:#0b1f14; --selva2:rgba(14,40,25,.72); --hoja:#2e7d4f; --hoja-clara:#57b46f;
-  --sol:#f2c14e; --crema:#f4efe0; --texto:#eaf4ea; --rojo:#d05c4a;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;font-family:'Quicksand','Segoe UI',system-ui,sans-serif;color:var(--texto);min-height:100vh;
-  background:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1800&q=80') center/cover fixed,#0b1f14;
-  position:relative;
-}
-/* velo verde sobre la foto para legibilidad */
-body::before{
-  content:'';position:fixed;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(6,24,14,.55),rgba(11,31,20,.88));
-}
-/* aves flotando */
-.float-bird{position:fixed;z-index:-1;font-size:34px;opacity:.5;animation:flotar 14s ease-in-out infinite;pointer-events:none}
-.float-bird.b2{animation-delay:-4s;font-size:26px;right:8%}
-.float-bird.b3{animation-delay:-9s;font-size:30px;animation-duration:18s}
-@keyframes flotar{0%,100%{transform:translateY(0) translateX(0) rotate(-4deg)}50%{transform:translateY(-38px) translateX(26px) rotate(6deg)}}
+/* ============================================================
+   MODO CAZADOR · DESAFÍO DE AVES — tema selva documental
+   Solo CSS puro. Primero celular, luego pantallas grandes.
+   ============================================================ */
 
-header{text-align:center;padding:30px 16px 8px}
-h1{
-  margin:0;font-size:38px;letter-spacing:1px;color:var(--sol);
-  text-shadow:0 2px 18px rgba(0,0,0,.6);
+:root{
+  /* paleta */
+  --selva-0:#06140c;
+  --selva-1:#0b1f14;
+  --selva-2:#12301f;
+  --hoja:#2e7d4f;
+  --hoja-clara:#57b46f;
+  --hoja-brillo:#7fe39a;
+  --sol:#f2c14e;
+  --sol-claro:#ffe08a;
+  --coral:#e2685a;
+  --texto:#eef6ec;
+  --texto-suave:rgba(238,246,236,.78);
+
+  /* vidrio esmerilado */
+  --vidrio:rgba(14,42,26,.58);
+  --vidrio-fuerte:rgba(9,28,17,.72);
+  --borde:rgba(87,180,111,.38);
+  --borde-vivo:rgba(127,227,154,.75);
+
+  /* forma y sombra */
+  --radio:20px;
+  --radio-sm:14px;
+  --sombra:0 12px 36px rgba(0,0,0,.38),0 2px 6px rgba(0,0,0,.25);
+  --resplandor:0 0 0 1px var(--borde-vivo),0 0 22px rgba(87,180,111,.35);
+
+  --titulo:'Baloo 2','Quicksand',system-ui,sans-serif;
+  --cuerpo:'Quicksand','Segoe UI',system-ui,sans-serif;
+  --suave:cubic-bezier(.22,.8,.3,1);
 }
-h1 .flap{display:inline-block;animation:aleteo 2.6s ease-in-out infinite}
-@keyframes aleteo{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.tagline{margin:8px 0 16px;opacity:.9;font-size:15px;max-width:560px;margin-inline:auto}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;min-height:100vh;min-height:100dvh;
+  font-family:var(--cuerpo);font-weight:500;line-height:1.5;
+  color:var(--texto);background:var(--selva-1);
+  position:relative;overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ---------- fondo: foto de selva fija + respaldo en gradiente ----------
+   Va en una capa fija (::before) para que también quede quieta en celulares,
+   donde background-attachment:fixed no funciona. Si la foto no carga,
+   se ve el gradiente de selva que está debajo. */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-3;pointer-events:none;
+  background:
+    url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=1800&q=75') center/cover no-repeat,
+    radial-gradient(120% 70% at 20% 0%,#2a6a42 0%,transparent 60%),
+    radial-gradient(90% 60% at 100% 100%,#1d4a30 0%,transparent 65%),
+    linear-gradient(170deg,#173d27 0%,#0b1f14 55%,#06140c 100%);
+  transform:scale(1.04);
+}
+/* velo verde profundo + niebla suave arriba para legibilidad */
+body::after{
+  content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(80% 45% at 50% -5%,rgba(220,240,225,.16),transparent 70%),
+    linear-gradient(180deg,rgba(6,24,14,.50) 0%,rgba(8,28,17,.72) 40%,rgba(6,20,12,.92) 100%);
+}
+
+/* ---------- aves flotando (decorativas, nunca tapan clics) ---------- */
+.float-bird{
+  position:fixed;z-index:-1;pointer-events:none;user-select:none;
+  display:none; /* ocultas en celular */
+  font-size:30px;opacity:.38;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.45)) saturate(.85);
+  animation:flotar 16s ease-in-out infinite;
+  will-change:transform;
+}
+.float-bird.b1{left:5%;top:20%}
+.float-bird.b2{right:7%;top:46%;font-size:24px;animation-delay:-5s;animation-duration:19s}
+.float-bird.b3{left:9%;top:74%;font-size:27px;animation-delay:-10s;animation-duration:22s}
+@keyframes flotar{
+  0%,100%{transform:translate(0,0) rotate(-4deg)}
+  33%{transform:translate(22px,-26px) rotate(5deg)}
+  66%{transform:translate(-14px,-44px) rotate(-2deg)}
+}
+
+/* ---------- cabecera ---------- */
+header{text-align:center;padding:26px 16px 6px}
+.kicker{
+  display:inline-block;margin:0 0 8px;padding:4px 12px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sol-claro);background:rgba(242,193,78,.12);border:1px solid rgba(242,193,78,.35);
+}
+h1{
+  margin:0;font-family:var(--titulo);font-weight:800;
+  font-size:clamp(30px,8vw,48px);line-height:1.05;letter-spacing:.5px;
+  color:var(--sol);
+  text-shadow:0 2px 0 rgba(90,55,0,.35),0 6px 26px rgba(0,0,0,.55);
+}
+h1 .flap{
+  display:inline-block;transform-origin:50% 80%;
+  animation:aleteo 2.4s ease-in-out infinite;
+}
+@keyframes aleteo{
+  0%,100%{transform:translateY(0) rotate(0) scaleY(1)}
+  15%{transform:translateY(-4px) rotate(-8deg) scaleY(.88)}
+  30%{transform:translateY(-8px) rotate(6deg) scaleY(1.06)}
+  45%{transform:translateY(-5px) rotate(-6deg) scaleY(.9)}
+  60%{transform:translateY(-2px) rotate(3deg) scaleY(1)}
+}
+.tagline{
+  margin:10px auto 18px;max-width:560px;
+  font-size:15px;color:var(--texto-suave);
+}
+.hojas{display:block;margin:-6px 0 14px;font-size:14px;letter-spacing:10px;opacity:.7}
+
+/* pestañas */
 nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .tab{
-  background:var(--selva2);backdrop-filter:blur(8px);border:1px solid var(--hoja);
-  color:var(--texto);padding:11px 20px;border-radius:26px;cursor:pointer;font-size:14px;transition:.2s;
+  font-family:var(--titulo);font-weight:600;font-size:16px;
+  color:var(--texto);cursor:pointer;
+  padding:10px 20px;border-radius:999px;
+  background:var(--vidrio);border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  transition:transform .2s var(--suave),box-shadow .2s,border-color .2s,background .2s;
 }
-.tab:hover{transform:translateY(-2px)}
-.tab.activa{background:var(--hoja);border-color:var(--hoja-clara);font-weight:bold;box-shadow:0 0 18px rgba(87,180,111,.45)}
+.tab.activa{
+  color:#06210f;border-color:var(--hoja-brillo);
+  background:linear-gradient(135deg,var(--hoja-brillo),var(--hoja-clara) 55%,var(--hoja));
+  box-shadow:0 0 0 3px rgba(87,180,111,.22),0 8px 22px rgba(0,0,0,.35);
+}
 
-main{max-width:780px;margin:0 auto;padding:14px 16px 40px}
+/* ---------- contenido ---------- */
+main{max-width:800px;margin:0 auto;padding:12px 16px 36px}
+
+/* paneles: aparecen suave al cambiar de pestaña */
+#pane-quiz,#pane-id{animation:entrar .45s var(--suave) both}
+
 .card{
-  background:var(--selva2);backdrop-filter:blur(12px);border:1px solid rgba(87,180,111,.5);
-  border-radius:20px;padding:22px;margin:14px 0;box-shadow:0 10px 34px rgba(0,0,0,.45);
+  position:relative;
+  background:linear-gradient(160deg,rgba(30,74,46,.55),var(--vidrio) 45%,var(--vidrio-fuerte));
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);
+  border:1px solid var(--borde);
+  border-radius:var(--radio);
+  padding:20px 16px;margin:14px 0;
+  box-shadow:var(--sombra),inset 0 1px 0 rgba(255,255,255,.07);
+  transition:border-color .3s,box-shadow .3s;
 }
+/* brillo de hoja en el borde superior */
+.card::before{
+  content:'';position:absolute;left:18px;right:18px;top:-1px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(127,227,154,.8),transparent);
+}
+
+/* marcador */
 .marcador{
-  display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;
-  background:rgba(11,31,20,.66);border:1px dashed var(--hoja-clara);
-  border-radius:14px;padding:10px;margin-bottom:12px;
+  display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  font-size:13px;font-weight:600;
 }
+.marcador span{
+  padding:7px 12px;border-radius:999px;
+  background:var(--vidrio-fuerte);border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+}
+.marcador b{font-family:var(--titulo);font-size:17px;color:var(--sol);margin-left:2px}
+
 .ave-card{text-align:center;min-height:300px}
-.instruccion{font-size:18px;margin:4px 0 14px}
-.player-wrap{display:flex;flex-direction:column;gap:10px;align-items:center}
-#player{min-height:60px;width:100%;display:flex;justify-content:center}
+.instruccion{font-family:var(--titulo);font-weight:600;font-size:19px;line-height:1.3;margin:2px 0 14px}
+.instruccion b{color:var(--sol)}
+.player-wrap{display:flex;flex-direction:column;gap:12px;align-items:center}
+#player{width:100%;display:flex;justify-content:center}
+#player:empty{display:none}
+#player iframe{
+  width:100%;max-width:420px;height:auto;aspect-ratio:16/9;
+  border:1px solid var(--borde)!important;border-radius:var(--radio-sm)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.45);background:#000;
+  animation:entrar .4s var(--suave) both;
+}
 
-.btn{border:none;border-radius:26px;padding:12px 24px;font-size:15px;cursor:pointer;font-weight:bold;transition:.2s}
-.btn.grande{font-size:18px;padding:16px 32px}
-.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.35)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.primario{background:linear-gradient(135deg,#f7d268,var(--sol));color:#4a2e00}
-.secundario{background:rgba(0,0,0,.25);border:1.5px solid var(--hoja-clara);color:var(--texto)}
+/* ---------- botones ---------- */
+.btn{
+  font-family:var(--titulo);font-weight:700;font-size:16px;letter-spacing:.2px;
+  border:none;border-radius:999px;padding:12px 24px;cursor:pointer;
+  min-height:46px;
+  transition:transform .2s var(--suave),box-shadow .2s,filter .2s;
+}
+.btn.grande{font-size:19px;padding:16px 34px;min-height:58px}
+.btn:active:not(:disabled){transform:translateY(0) scale(.97)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:focus-visible,.tab:focus-visible,.opt:focus-visible{outline:3px solid var(--sol-claro);outline-offset:3px}
+.primario{
+  color:#3d2600;
+  background:linear-gradient(135deg,var(--sol-claro),var(--sol) 55%,#dda233);
+  box-shadow:0 6px 18px rgba(242,193,78,.25),inset 0 1px 0 rgba(255,255,255,.5);
+}
+.secundario{
+  color:var(--texto);
+  background:rgba(6,20,12,.45);border:1.5px solid var(--hoja-clara);
+}
+#btn-siguiente{margin-top:6px;animation:entrar .35s var(--suave) both}
+.ficha .btn{margin:6px 4px}
 
-.opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:16px 0}
+/* ---------- opciones del desafío ---------- */
+.opciones{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0 10px}
 .opt{
-  background:rgba(6,20,12,.6);border:1.5px solid var(--hoja);color:var(--texto);
-  border-radius:14px;padding:14px;font-size:15px;cursor:pointer;transition:.15s;
+  position:relative;
+  font-family:var(--cuerpo);font-weight:600;font-size:16px;color:var(--texto);
+  text-align:left;padding:14px 46px 14px 16px;min-height:52px;cursor:pointer;
+  background:rgba(6,22,13,.55);border:1.5px solid var(--borde);border-radius:var(--radio-sm);
+  transition:transform .2s var(--suave),box-shadow .2s,border-color .2s,background .2s,opacity .3s;
+  /* entrada escalonada en cada ronda nueva */
+  animation:entrar .45s var(--suave) both;
 }
-.opt:hover{border-color:var(--sol);background:rgba(46,125,79,.35)}
-.opt.correcta{background:var(--hoja);border-color:var(--hoja-clara);font-weight:bold}
-.opt.equivocada{background:var(--rojo);border-color:#ff8f7d}
-.opt:disabled{cursor:default;opacity:.9}
-.feedback{font-size:17px;margin:8px 0}
+.opt:nth-child(2){animation-delay:.06s}
+.opt:nth-child(3){animation-delay:.12s}
+.opt:nth-child(4){animation-delay:.18s}
+.opt::after{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;font-size:15px;font-weight:800;
+}
+.opt:disabled{cursor:default}
+/* las que no son ni correcta ni la elegida se apagan un poco */
+.opt:disabled:not(.correcta):not(.equivocada){opacity:.5}
+
+.opt.correcta{
+  color:#04210e;font-weight:700;border-color:var(--hoja-brillo);
+  background:linear-gradient(135deg,var(--hoja-brillo),var(--hoja-clara));
+  box-shadow:0 0 0 3px rgba(127,227,154,.25),0 0 26px rgba(127,227,154,.45);
+  animation:entrar .45s var(--suave) both,brillo .7s ease-out;
+}
+.opt.correcta::after{content:'✓';background:#04210e;color:var(--hoja-brillo)}
+
+.opt.equivocada{
+  color:#fff;border-color:#ff9b8c;
+  background:linear-gradient(135deg,#ec7a6b,var(--coral));
+  animation:entrar .45s var(--suave) both,sacudir .42s ease-in-out;
+}
+.opt.equivocada::after{content:'✕';background:rgba(0,0,0,.25);color:#fff}
+
+/* feedback: verde si acertó, coral si falló */
+.feedback{
+  font-family:var(--titulo);font-weight:700;font-size:19px;
+  margin:10px auto;padding:10px 16px;border-radius:var(--radio-sm);max-width:460px;
+  color:var(--hoja-brillo);background:rgba(87,180,111,.12);border:1px solid rgba(87,180,111,.4);
+  animation:entrar .35s var(--suave) both;
+}
+.opciones:has(.equivocada) + .feedback{
+  color:#ffb3a8;background:rgba(226,104,90,.12);border-color:rgba(226,104,90,.45);
+}
+
 .oculto{display:none!important}
-.ficha .emoji-ave{font-size:76px;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))}
-.ficha h2{margin:6px 0;color:var(--sol)}
 
-.grabadora{display:flex;gap:14px;align-items:center;justify-content:center;margin:14px 0;flex-wrap:wrap}
-.btn-grabando{box-shadow:0 0 0 6px rgba(208,92,74,.35)!important;background:var(--rojo)!important;color:#fff!important}
-#onda{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--hoja);border-radius:12px}
-.estado{font-size:13px;opacity:.9}
-#estado-mic.ok{color:var(--hoja-clara);font-weight:bold}
-#estado-mic.warn{color:var(--rojo)}
-.veredicto{font-size:24px;text-align:center;margin:12px 0;color:var(--sol);text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.barra{margin:6px 0}
-.barra .nombre{font-size:13px;display:flex;justify-content:space-between;margin-bottom:2px}
-.barra .pista{height:10px;background:rgba(0,0,0,.4);border-radius:6px;overflow:hidden}
-.barra .lleno{height:100%;background:linear-gradient(90deg,var(--hoja-clara),var(--sol));border-radius:6px;transition:width .3s}
-#barras{max-width:480px;margin:0 auto}
+/* ficha destapada */
+#destapado{animation:entrar .5s var(--suave) both}
+.ficha .emoji-ave{font-size:80px;line-height:1.1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));animation:pop .5s var(--suave) both}
+.ficha h2{margin:6px 0;font-family:var(--titulo);font-weight:800;font-size:28px;color:var(--sol)}
+.ficha p{color:var(--texto-suave);max-width:480px;margin:0 auto 14px}
 
-.aves-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;padding:16px}
-.mini{
-  border:1.5px solid var(--hoja);border-radius:14px;padding:12px 10px;text-align:center;cursor:pointer;
-  background:rgba(6,20,12,.55);transition:.15s;
+/* ---------- identificador ---------- */
+.grabadora{display:flex;flex-direction:column;gap:12px;align-items:center;margin:16px 0}
+.estado{font-size:13.5px;text-align:center;color:var(--texto-suave);max-width:460px}
+#estado-mic.ok{color:var(--hoja-brillo);font-weight:700}
+#estado-mic.warn{color:#ffb3a8}
+
+/* botón de grabar: pulso tipo radar mientras graba
+   (app.js deshabilita el botón durante la grabación) */
+#btn-grabar{position:relative}
+#btn-grabar:disabled,#btn-grabar.btn-grabando{
+  opacity:1;cursor:progress;color:#04210e;
+  background:linear-gradient(135deg,var(--hoja-brillo),var(--hoja-clara));
+  animation:radar 1.4s ease-out infinite;
 }
-.mini:hover{border-color:var(--sol);transform:translateY(-3px)}
-.mini .e{font-size:34px}
-.mini b{color:var(--sol);font-size:14px;display:block}
-.mini p{margin:4px 0 0;font-size:11.5px;opacity:.85}
+@keyframes radar{
+  0%{box-shadow:0 0 0 0 rgba(127,227,154,.65),0 0 0 0 rgba(127,227,154,.35)}
+  70%{box-shadow:0 0 0 18px rgba(127,227,154,0),0 0 0 34px rgba(127,227,154,0)}
+  100%{box-shadow:0 0 0 0 rgba(127,227,154,0),0 0 0 0 rgba(127,227,154,0)}
+}
 
-footer{text-align:center;font-size:12px;opacity:.75;padding:18px}
-@media (max-width:480px){
-  h1{font-size:26px}.opciones{grid-template-columns:1fr}
-  .float-bird{display:none}
+#onda{
+  display:block;width:100%;height:auto;
+  background:rgba(0,0,0,.35);border:1px solid var(--borde);border-radius:var(--radio-sm);
+}
+#resultado{animation:entrar .45s var(--suave) both}
+.veredicto{
+  font-family:var(--titulo);font-weight:800;font-size:22px;line-height:1.25;
+  text-align:center;margin:16px 0 10px;color:var(--sol);
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+#barras{max-width:480px;margin:0 auto}
+.barra{margin:8px 0}
+.barra .nombre{font-size:13.5px;font-weight:600;display:flex;justify-content:space-between;gap:8px;margin-bottom:4px}
+.barra .pista{height:10px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden}
+.barra .lleno{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--hoja),var(--hoja-clara) 50%,var(--sol));
+  transform-origin:left;animation:crecer .7s var(--suave) both;
+}
+.barra:first-child .nombre{color:var(--sol)}
+
+/* fichas de aves */
+.aves-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:14px}
+.mini{
+  border:1.5px solid var(--borde);border-radius:var(--radio-sm);
+  padding:14px 10px;text-align:center;cursor:pointer;
+  background:rgba(6,22,13,.5);
+  transition:transform .2s var(--suave),box-shadow .2s,border-color .2s;
+  animation:entrar .5s var(--suave) both;
+}
+.mini:nth-child(2){animation-delay:.05s}.mini:nth-child(3){animation-delay:.1s}
+.mini:nth-child(4){animation-delay:.15s}.mini:nth-child(5){animation-delay:.2s}
+.mini:nth-child(6){animation-delay:.25s}
+.mini .e{font-size:38px;line-height:1.2}
+.mini b{display:block;margin-top:4px;font-family:var(--titulo);font-weight:700;font-size:15.5px;color:var(--sol)}
+.mini p{margin:4px 0 0;font-size:12px;line-height:1.4;color:var(--texto-suave)}
+
+/* ---------- pie ---------- */
+footer{text-align:center;font-size:12px;color:var(--texto-suave);padding:10px 16px 28px;max-width:720px;margin:0 auto}
+footer p{margin:0;opacity:.8}
+
+/* ---------- hover solo en dispositivos con mouse (evita hover pegado en celular) ---------- */
+@media (hover:hover){
+  .tab:hover{transform:translateY(-2px);box-shadow:var(--resplandor)}
+  .tab.activa:hover{box-shadow:0 0 0 3px rgba(87,180,111,.35),0 10px 26px rgba(0,0,0,.4)}
+  .btn:hover:not(:disabled){transform:translateY(-3px);filter:brightness(1.06)}
+  .primario:hover:not(:disabled){box-shadow:0 0 0 1px rgba(255,224,138,.8),0 10px 26px rgba(242,193,78,.4)}
+  .secundario:hover:not(:disabled){box-shadow:var(--resplandor)}
+  .opt:hover:not(:disabled){transform:translateY(-2px);border-color:var(--borde-vivo);background:rgba(46,125,79,.32);box-shadow:var(--resplandor)}
+  .card:hover{border-color:rgba(127,227,154,.55);box-shadow:var(--sombra),0 0 26px rgba(87,180,111,.18),inset 0 1px 0 rgba(255,255,255,.07)}
+  .mini:hover{transform:translateY(-3px);border-color:var(--borde-vivo);box-shadow:var(--resplandor)}
+}
+
+/* ---------- animaciones ---------- */
+@keyframes entrar{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
+@keyframes sacudir{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-7px)}40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}80%{transform:translateX(3px)}
+}
+@keyframes brillo{0%{filter:brightness(1.5)}100%{filter:brightness(1)}}
+@keyframes crecer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---------- pantallas medianas y grandes ---------- */
+@media (min-width:600px){
+  header{padding:38px 16px 10px}
+  .tagline{font-size:16px}
+  .card{padding:26px 26px}
+  .opciones{grid-template-columns:1fr 1fr}
+  .marcador{gap:10px;font-size:14px}
+  .grabadora{flex-direction:row;justify-content:center}
+  .veredicto{font-size:26px}
+  .aves-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:18px}
+}
+@media (min-width:900px){
+  .float-bird{display:block}
+  .card{border-radius:22px}
+}
+
+/* respeta a quien pidió menos movimiento */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .float-bird{display:none!important}
 }

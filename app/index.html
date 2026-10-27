@@ -4,19 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>🐦 Modo Cazador — Cantos de Aves TinyML</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0b1f14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
 </head>
 <body>
 
-<span class="float-bird" style="left:6%;top:22%">🦜</span>
-<span class="float-bird b2" style="top:48%">🕊️</span>
-<span class="float-bird b3" style="left:12%;top:74%">🐦</span>
+<span class="float-bird b1" aria-hidden="true">🦜</span>
+<span class="float-bird b2" aria-hidden="true">🕊️</span>
+<span class="float-bird b3" aria-hidden="true">🐦</span>
 
 <header>
+  <p class="kicker">Aves de Colombia · IA en vivo</p>
   <h1><span class="flap">🦜</span> Modo Cazador</h1>
   <p class="tagline">Escucha el canto · adivina cuál ave es · deja que la IA identifique con tu micrófono. 6 aves de Colombia en vivo 🌿</p>
+  <span class="hojas" aria-hidden="true">🌿🍃🌿</span>
   <nav>
     <button id="tab-quiz" class="tab activa">🦜 Desafío de Aves</button>
     <button id="tab-id" class="tab">🎯 Identificador IA</button>
