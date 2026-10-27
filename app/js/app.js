@@ -209,6 +209,25 @@ $('#btn-grabar').onclick = async ()=>{
     $('#estado-mic').textContent='❌ No se pudo usar el micrófono: '+(err.message||err); $('#estado-mic').className='estado warn';}
 };
 
+/* ---- plan B sin micrófono: cargar un archivo de audio (mismo pipeline) ---- */
+$('#cargar-wav').onchange = async ()=>{
+  const f=$('#cargar-wav').files[0]; if(!f) return;
+  if(!modelo||!etiquetas){$('#estado-mic').textContent='⏳ El modelo aún no está cargado.';return;}
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)({sampleRate:SR});
+    const audio=await ctx.decodeAudioData(await f.arrayBuffer());
+    let x=audio.getChannelData(0);
+    if(audio.sampleRate!==SR){
+      const y=new Float32Array(Math.floor(x.length*SR/audio.sampleRate));
+      for(let i=0;i<y.length;i++){const p=i*audio.sampleRate/SR, i0=Math.floor(p);
+        y[i]=p+1<x.length? x[i0]+(p-i0)*(x[i0+1]-x[i0]) : x[x.length-1];}
+      x=y;
+    }
+    dibujaOnda(x); inferir(x);
+  }catch(err){$('#estado-mic').textContent='❌ No se pudo leer el audio: '+(err.message||err);$('#estado-mic').className='estado warn';}
+  $('#cargar-wav').value='';
+};
+
 function dibujaOnda(x){
   const c=$('#onda'), g=c.getContext('2d');
   g.fillStyle='#0b1c12'; g.fillRect(0,0,c.width,c.height);
@@ -226,6 +245,10 @@ function dibujaOnda(x){
 const NO_REG='ave-no-registrada', UMBRAL=0.40, PICO_MIN=0.02;
 
 async function inferir(x){
+  // normalizar PRIMERO (mismo preprocesamiento del entrenamiento: cargar_wav divide por el maximo)
+  let pico=0; for(let i=0;i<x.length;i++) pico=Math.max(pico,Math.abs(x[i]));
+  if(pico>0){ const g=1/pico; for(let i=0;i<x.length;i++) x[i]*=g; }
+  const silencio=pico<PICO_MIN;
   const mu=etiquetas.mu, sd=etiquetas.sd, nC=etiquetas.clases.length;
   const filas=ventanasApp(x).map(v=>mfccJS(v).map((f,i)=>(f-mu[i])/(sd[i]+1e-6))); // 1.274 c/u
   const t=tf.tensor2d(filas);
@@ -235,11 +258,6 @@ async function inferir(x){
   for(let r=0;r<filas.length;r++) for(let c=0;c<nC;c++) probs[c]+=todas[r*nC+c]/filas.length;
   let pares=etiquetas.clases.map((c,i)=>({c,p:probs[i]})).sort((a,b)=>b.p-a.p);
   const mejor=pares[0];
-  let pico=0; for(let i=0;i<x.length;i++) pico=Math.max(pico,Math.abs(x[i]));
-  // normalizar como se hace en el entrenamiento (cargar_wav divide por el maximo):
-  // sin esto, un canto que llega bajo por el aire queda en otra escala que el modelo nunca vio
-  if(pico>0){ const g=1/pico; for(let i=0;i<x.length;i++) x[i]*=g; }
-  const silencio=pico<PICO_MIN;
   const noRegistrada= silencio || mejor.c===NO_REG || mejor.p<UMBRAL;
 
   pares=pares.filter(({c})=>c!==NO_REG);                 // las barras solo muestran las 6 aves

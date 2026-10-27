@@ -67,6 +67,8 @@
     <p class="instruccion">🎯 Presiona grabar, acércate al ave (o pon el video), y mantén <b>7 segundos</b> de canto.</p>
     <div class="grabadora">
       <button id="btn-grabar" class="btn primario grande">🎙️ Grabar 7 s</button>
+      <div style="margin-top:.6em"><label for="cargar-wav" class="btn secundario" style="display:inline-block;cursor:pointer">📁 Probar con un audio .wav</label>
+      <input id="cargar-wav" type="file" accept="audio/*,.wav" style="display:none"></div>
       <div id="estado-mic" class="estado">El modelo IA aún no está cargado.</div>
     </div>
     <canvas id="onda" width="640" height="90"></canvas>
