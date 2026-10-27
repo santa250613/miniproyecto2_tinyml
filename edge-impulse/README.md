@@ -53,3 +53,10 @@ Si un día necesitas más audio público: **xeno-canto.org** tiene cantos reales
 - [ ] ≥ 15 clips por ave
 - [ ] Todos los archivos tienen `_S<n>_`
 - [ ] Audios de 3–5 s, sin ruido fuerte de fondo hablado
+## Grabación automática con el Nano 33 BLE Sense (lo que se usó)
+
+1. Flashear el firmware de Edge Impulse y conectar con `edge-impulse-daemon`.
+2. `EI_API_KEY=<clave Admin> python3 grabar_auto.py <carpeta con audios por ave>` → el PC reproduce cada canto por los parlantes y el Nano graba 5 s con label `<ave>-S<n>` (S1 100 %, S2 75 %, S3 55 % de volumen; 5 clips por ave y sesión).
+3. Exportar (o bajar por API) y convertir: `python3 renombrar_export.py <export> dataset_aves_nano.zip` → nombres `<ave>_S<n>_<k>.wav` listos para el notebook.
+
+Limitación para la sustentación: la fuente son cantos reproducidos por parlante (no aves en vivo) y algunas sesiones repiten audios de origen.
