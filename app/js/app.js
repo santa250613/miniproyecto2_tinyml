@@ -112,17 +112,25 @@ function dftReal(x){ // |X_k|^2 para k=0..257
   }
   return out;
 }
-function recorteEnergia(x, n=N_FRAMES*160){ // 98 frames × 160 = 15680 ≈ 1 s
-  if(x.length<=n){const y=new Float32Array(n); y.set(x); return y;}
-  const paso=1000; let mejor=0, iMejor=0;
-  for(let i=0;i+paso<=x.length;i+=paso){
-    let e=0; for(let j=i;j<i+paso;j+=4) e+=x[j]*x[j];
-    if(e>mejor){mejor=e; iMejor=i;}
+// Hasta K_VENT ventanas de ~1 s sin solaparse, las de más energía (bloques de 1000 muestras).
+// Solo cuentan bloques con ≥ REL_VENT (50 %) de la energía del más fuerte (evita meter silencios).
+// Copia exacta de ventanas_app() del notebook.
+const K_VENT=3, REL_VENT=0.50;
+function ventanasApp(x, n=N_FRAMES*160){
+  if(x.length<=n){const y=new Float32Array(n); y.set(x); return [y];}
+  const paso=1000, e=[];
+  for(let i=0;i+paso<=x.length;i+=paso){let s=0; for(let j=i;j<i+paso;j+=4) s+=x[j]*x[j]; e.push(s);}
+  const orden=e.map((v,b)=>b).sort((a,b)=>(e[b]-e[a])||(a-b));
+  const inicios=[];
+  for(const b of orden){
+    if(e[b]<REL_VENT*e[orden[0]]) break;
+    const s=b*paso;
+    if(inicios.every(t=>Math.abs(s-t)>=n)) inicios.push(s);
+    if(inicios.length===K_VENT) break;
   }
-  return x.slice(iMejor, iMejor+n);
+  return inicios.map(s=>x.slice(s,s+n));
 }
-function mfccJS(x){
-  x=recorteEnergia(x);
+function mfccJS(x){ // x = una ventana de ~1 s (ver ventanasApp)
   // pre-énfasis
   const y=new Float32Array(x.length); y[0]=x[0];
   for(let i=1;i<x.length;i++) y[i]=x[i]-0.97*x[i-1];
@@ -218,12 +226,13 @@ function dibujaOnda(x){
 const NO_REG='ave-no-registrada', UMBRAL=0.40, PICO_MIN=0.02;
 
 async function inferir(x){
-  const f=mfccJS(x); // 1.274
-  const mu=etiquetas.mu, sd=etiquetas.sd;
-  const input=f.map((v,i)=>(v-mu[i])/(sd[i]+1e-6));
-  const t=tf.tensor2d([input]);
+  const mu=etiquetas.mu, sd=etiquetas.sd, nC=etiquetas.clases.length;
+  const filas=ventanasApp(x).map(v=>mfccJS(v).map((f,i)=>(f-mu[i])/(sd[i]+1e-6))); // 1.274 c/u
+  const t=tf.tensor2d(filas);
   const p=modelo.predict(t); t.dispose();
-  const probs=(await p.data()); p.dispose();
+  const todas=(await p.data()); p.dispose();
+  const probs=new Float32Array(nC);                       // promedio de las ventanas
+  for(let r=0;r<filas.length;r++) for(let c=0;c<nC;c++) probs[c]+=todas[r*nC+c]/filas.length;
   let pares=etiquetas.clases.map((c,i)=>({c,p:probs[i]})).sort((a,b)=>b.p-a.p);
   const mejor=pares[0];
   let pico=0; for(let i=0;i<x.length;i++) pico=Math.max(pico,Math.abs(x[i]));
@@ -258,7 +267,7 @@ function wav16k(x){ // Float32 [-1,1] → WAV PCM 16 bits mono 16 kHz
   return new Blob([b],{type:'audio/wav'});
 }
 function mostrarDiagnostico(x, probs, pico){
-  const txt=etiquetas.clases.map((c,i)=>`${c}: ${(probs[i]*100).toFixed(1)}%`).join(' · ');
+  const txt=`${ventanasApp(x).length} ventana(s) · `+etiquetas.clases.map((c,i)=>`${c}: ${(probs[i]*100).toFixed(1)}%`).join(' · ');
   const url=URL.createObjectURL(wav16k(x)), nombre=`grabacion_${Date.now()}.wav`;
   $('#barras').insertAdjacentHTML('beforeend',
     `<p style="font-size:.8em;opacity:.85;margin-top:.8em">🛠️ pico ${pico.toFixed(3)} · ${(x.length/SR).toFixed(1)} s<br>${txt}<br>
