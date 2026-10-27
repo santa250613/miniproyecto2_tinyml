@@ -3,7 +3,7 @@
 **▶▶▶ VER LA APP FUNCIONANDO (click aquí):**
 ### 👉 https://santa250613.github.io/miniproyecto2_tinyml/
 
-Ese link abre la app publicada (GitHub Pages) — quiz de aves 🦜 + identificador por micrófono 🎯. Solo clic, no hay que instalar nada.
+Ese link abre la app publicada (GitHub Pages) — desafío de aves 🦜 + identificador por micrófono 🎯. Solo clic, no hay que instalar nada.
 
 ---
 
@@ -25,13 +25,13 @@ python3 -m http.server 8000
 
 | Modo | Qué hace | Requisito |
 |---|---|---|
-| 🦜 Zoológico (quiz) | Escucha un canto y adivina cuál ave es (4 opciones, marcador y racha) | Nada — funciona de una |
+| 🦜 Desafío de Aves | Escucha un canto y adivina cuál ave es (4 opciones, marcador y racha) | Nada — funciona de una |
 | 🎯 Identificador IA | Graba 3 s por micrófono y una red neuronal dirá qué ave es | Modelo en `app/modelo/` (ver README raíz, pasos "modelo") |
 
 ## Contenido de esta carpeta
 - `index.html` — la app (2 pestañas)
 - `css/style.css` — tema selva 🌿
-- `js/app.js` — lógica: quiz + MFCC en JavaScript + TF.js
+- `js/app.js` — lógica: desafío + MFCC en JavaScript + TF.js
 - `modelo/` — *(se agrega después)* model.json + labels.json, entrenados en el Colab
 
 IA para Móviles · UAO 2026-2 · Sebastián Santana · audios CC de xeno-canto.org

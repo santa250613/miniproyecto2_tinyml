@@ -29,7 +29,7 @@
         → Keras → export TensorFlow.js + labels
         ▼
   🌐 APP WEB "Modo Cazador"
-        · Quiz del zoológico: suena un canto (YouTube embebido) y adivinas
+        · Desafío de Aves: suena un canto (YouTube embebido) y adivinas
         · Identificador: grabas 3 s con el micrófono → MFCC en el navegador
           → modelo TinyML (tfjs) → "Es un Bichofué gritón (94%)"
 ```
@@ -48,7 +48,7 @@
 └── app/
     ├── index.html             ← la app "Modo Cazador"
     ├── css/style.css
-    ├── js/app.js              ← quiz + grabación + MFCC en JS + inferencia tfjs
+    ├── js/app.js              ← desafío + grabación + MFCC en JS + inferencia tfjs
     └── modelo/                ← AQUÍ va el modelo exportado por el Colab
         └── (model.json + grupo1-*.bin + labels.json)
 ```

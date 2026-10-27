@@ -158,7 +158,7 @@ function cargaModelo(){
       $('#estado-mic').textContent=`✅ Modelo cargado — ${lbl.clases.length} clases. ¡Lista para cazar!`;
       $('#estado-mic').className='estado ok';
     })
-    .catch(()=>{ $('#estado-mic').textContent='⏳ Sin modelo todavía: entrena en Colab y descomprime modelo_aves.zip en app/modelo/. El quiz ya funciona sin modelo.';
+    .catch(()=>{ $('#estado-mic').textContent='⏳ Sin modelo todavía: entrena en Colab y descomprime modelo_aves.zip en app/modelo/. El desafío ya funciona sin modelo.';
       $('#estado-mic').className='estado warn'; });
 }
 cargaModelo();
