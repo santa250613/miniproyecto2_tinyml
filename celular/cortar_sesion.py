@@ -3,18 +3,20 @@ Va siguiendo la grabación clip por clip: compara la envolvente (volumen en el t
 del original sesion_aves.wav alrededor de cada clip y busca dónde quedó en la grabación.
 Aguanta que la grabación empiece tarde, se corte antes o pierda segundos en la mitad.
 Uso: python3 cortar_sesion.py ~/Descargas/sesion_celular_XXXX.m4a 6 ../dataset
-     (6 = número de sesión → <clase>_S6_NN.wav dentro de dataset/dataset_celular_s6.zip)"""
+     (6 = número de sesión → <clase>_S6_NN.wav dentro de dataset/dataset_celular_s6.zip)
+     python3 cortar_sesion.py ~/Descargas/sesion_celular_YYYY.m4a 8 ../dataset youtube   (para sesion_youtube.wav)"""
 import sys, os, io, json, wave, zipfile, subprocess
 import numpy as np
 SR, HOP = 16000, 160                       # envolvente cada 10 ms
 aqui = os.path.dirname(os.path.abspath(__file__))
 grab, ses, ds = os.path.expanduser(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
-info = json.load(open(os.path.join(aqui, 'sesion_aves.json')))
+modo = sys.argv[4] if len(sys.argv) > 4 else 'aves'
+info = json.load(open(os.path.join(aqui, f'sesion_{modo}.json')))
 
 raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', grab, '-ac', '1', '-ar', str(SR), '-f', 's16le', '-'],
                      capture_output=True, check=True).stdout
 x = np.frombuffer(raw, np.int16).astype(np.float64) / 32768
-w = wave.open(os.path.expanduser('~/Descargas/sesion_aves.wav'))
+w = wave.open(os.path.expanduser(f'~/Descargas/sesion_{modo}.wav'))
 ORIG = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float64) / 32768
 
 env = lambda v: np.log(np.sqrt(np.convolve(v**2, np.ones(HOP)/HOP, 'same')[::HOP]) + 1e-3)

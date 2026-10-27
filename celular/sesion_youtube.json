@@ -1,0 +1,146 @@
+{
+ "barrido_ini": 1.0,
+ "barrido_fin": 300.14924999999994,
+ "clips": [
+  {
+   "clase": "pellar-comun",
+   "ini": 4.0,
+   "fin": 15.1688125
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 16.6688125,
+   "fin": 21.6688125
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 23.1688125,
+   "fin": 29.055062500000002
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 30.555062500000002,
+   "fin": 41.723875
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 43.223875,
+   "fin": 48.223875
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 49.723875,
+   "fin": 64.123875
+  },
+  {
+   "clase": "pigua",
+   "ini": 65.623875,
+   "fin": 70.67425
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 72.17425,
+   "fin": 77.17425
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 78.67425,
+   "fin": 98.78275
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 100.28275,
+   "fin": 114.68275
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 116.18275,
+   "fin": 122.069
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 123.569,
+   "fin": 134.7378125
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 136.2378125,
+   "fin": 147.673625
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 149.173625,
+   "fin": 155.05987499999998
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 156.55987499999998,
+   "fin": 161.55987499999998
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 163.05987499999998,
+   "fin": 168.05987499999998
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 169.55987499999998,
+   "fin": 174.55987499999998
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 176.05987499999998,
+   "fin": 187.49568749999997
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 188.99568749999997,
+   "fin": 193.99568749999997
+  },
+  {
+   "clase": "pigua",
+   "ini": 195.49568749999997,
+   "fin": 200.54606249999998
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 202.04606249999998,
+   "fin": 207.04606249999998
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 208.54606249999998,
+   "fin": 213.54606249999998
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 215.04606249999998,
+   "fin": 229.44606249999998
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 230.94606249999998,
+   "fin": 251.05456249999997
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 252.55456249999997,
+   "fin": 257.5545625
+  },
+  {
+   "clase": "pigua",
+   "ini": 259.0545625,
+   "fin": 264.10493749999995
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 265.60493749999995,
+   "fin": 277.04074999999995
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 278.54074999999995,
+   "fin": 298.64924999999994
+  }
+ ]
+}
