@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎙️ Sesión de grabación — Modo Cazador</title>
+<meta name="theme-color" content="#0b1f14">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  main{max-width:560px;margin:0 auto;padding:16px}
+  .tarjeta{background:var(--vidrio-fuerte);border:1px solid var(--borde);border-radius:var(--radio);padding:20px;margin-top:16px}
+  .tarjeta ol{padding-left:1.2em;line-height:1.6}
+  #tiempo{font-size:2.6em;font-weight:800;text-align:center;margin:.3em 0}
+  #nivel{height:14px;border-radius:7px;background:rgba(255,255,255,.1);overflow:hidden}
+  #nivel div{height:100%;width:0;background:var(--hoja-brillo);transition:width .1s}
+  .fila{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+  #descargar{display:none}
+</style>
+</head>
+<body>
+<header>
+  <p class="kicker">Herramienta para entrenar el modelo</p>
+  <h1>🎙️ Sesión de grabación</h1>
+  <p class="tagline">Graba con el celular (igual que el Identificador IA) mientras el PC reproduce <b>sesion_aves.wav</b>.</p>
+</header>
+<main>
+  <div class="tarjeta">
+    <ol>
+      <li>Pon el celular donde lo usarás en la clase (cerca del parlante del PC).</li>
+      <li>Toca <b>⏺ Empezar</b> aquí.</li>
+      <li>En el PC reproduce <b>sesion_aves.wav</b> de principio a fin. No hables cerca.</li>
+      <li>Cuando el audio del PC termine, toca <b>⏹ Terminar</b> y luego <b>⬇️ Descargar</b>.</li>
+    </ol>
+  </div>
+  <div class="tarjeta">
+    <div id="tiempo">00:00</div>
+    <div id="nivel"><div></div></div>
+    <div class="fila">
+      <button id="empezar" class="tab activa">⏺ Empezar</button>
+      <button id="terminar" class="tab" disabled>⏹ Terminar</button>
+      <a id="descargar" class="tab activa">⬇️ Descargar</a>
+    </div>
+    <p id="estado" class="estado" style="text-align:center;margin-top:12px"></p>
+  </div>
+</main>
+<script>
+// Mismos ajustes de micrófono que js/app.js (audio crudo, sin filtros del celular)
+const $=s=>document.querySelector(s);
+let rec, stream, t0, iv, ctx, chunks=[];
+$('#empezar').onclick=async()=>{
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+  }catch(e){ $('#estado').textContent='❌ Sin micrófono: '+(e.message||e); return; }
+  try{ await navigator.wakeLock?.request('screen'); }catch(e){}   // que la pantalla no se apague
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const an=ctx.createAnalyser(); ctx.createMediaStreamSource(stream).connect(an);
+  const buf=new Float32Array(an.fftSize);
+  chunks=[]; rec=new MediaRecorder(stream);
+  rec.ondataavailable=e=>chunks.push(e.data);
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:rec.mimeType});
+    const ext=(rec.mimeType.includes('mp4')?'m4a':rec.mimeType.includes('ogg')?'ogg':'webm');
+    const a=$('#descargar'); a.href=URL.createObjectURL(blob);
+    a.download=`sesion_celular_${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.${ext}`;
+    a.style.display='inline-block';
+    $('#estado').textContent=`✅ Listo (${(blob.size/1e6).toFixed(1)} MB). Descárgalo y pásalo al PC (carpeta Descargas).`;
+  };
+  rec.start(1000); t0=Date.now();
+  iv=setInterval(()=>{
+    const s=Math.floor((Date.now()-t0)/1000);
+    $('#tiempo').textContent=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+    an.getFloatTimeDomainData(buf); let p=0; for(const v of buf) p=Math.max(p,Math.abs(v));
+    $('#nivel div').style.width=Math.min(100,p*100)+'%';
+  },100);
+  $('#empezar').disabled=true; $('#terminar').disabled=false; $('#descargar').style.display='none';
+  $('#estado').textContent='⏺ Grabando… ahora reproduce sesion_aves.wav en el PC';
+};
+$('#terminar').onclick=()=>{
+  clearInterval(iv); rec.stop(); stream.getTracks().forEach(t=>t.stop()); ctx.close();
+  $('#empezar').disabled=false; $('#terminar').disabled=true;
+};
+</script>
+</body>
+</html>

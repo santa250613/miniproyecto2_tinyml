@@ -1,0 +1,561 @@
+{
+ "barrido_ini": 1.0,
+ "barrido_fin": 644.5,
+ "clips": [
+  {
+   "clase": "ave-no-registrada",
+   "ini": 4.0,
+   "fin": 9.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 10.5,
+   "fin": 15.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 17.0,
+   "fin": 21.0
+  },
+  {
+   "clase": "pigua",
+   "ini": 22.5,
+   "fin": 26.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 28.0,
+   "fin": 33.0
+  },
+  {
+   "clase": "pigua",
+   "ini": 34.5,
+   "fin": 38.5
+  },
+  {
+   "clase": "pigua",
+   "ini": 40.0,
+   "fin": 44.0
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 45.5,
+   "fin": 49.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 51.0,
+   "fin": 56.0
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 57.5,
+   "fin": 61.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 63.0,
+   "fin": 67.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 68.5,
+   "fin": 73.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 75.0,
+   "fin": 80.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 81.5,
+   "fin": 86.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 88.0,
+   "fin": 92.0
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 93.5,
+   "fin": 97.5
+  },
+  {
+   "clase": "pigua",
+   "ini": 99.0,
+   "fin": 103.0
+  },
+  {
+   "clase": "pigua",
+   "ini": 104.5,
+   "fin": 108.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 110.0,
+   "fin": 115.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 116.5,
+   "fin": 121.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 123.0,
+   "fin": 128.0
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 129.5,
+   "fin": 133.5
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 135.0,
+   "fin": 139.0
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 140.5,
+   "fin": 144.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 146.0,
+   "fin": 150.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 151.5,
+   "fin": 155.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 157.0,
+   "fin": 161.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 162.5,
+   "fin": 167.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 169.0,
+   "fin": 173.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 174.5,
+   "fin": 178.5
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 180.0,
+   "fin": 184.0
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 185.5,
+   "fin": 189.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 191.0,
+   "fin": 196.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 197.5,
+   "fin": 202.5
+  },
+  {
+   "clase": "pigua",
+   "ini": 204.0,
+   "fin": 208.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 209.5,
+   "fin": 213.5
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 215.0,
+   "fin": 219.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 220.5,
+   "fin": 224.5
+  },
+  {
+   "clase": "pigua",
+   "ini": 226.0,
+   "fin": 230.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 231.5,
+   "fin": 236.5
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 238.0,
+   "fin": 242.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 243.5,
+   "fin": 248.5
+  },
+  {
+   "clase": "pigua",
+   "ini": 250.0,
+   "fin": 254.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 255.5,
+   "fin": 260.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 262.0,
+   "fin": 266.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 267.5,
+   "fin": 272.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 274.0,
+   "fin": 278.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 279.5,
+   "fin": 283.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 285.0,
+   "fin": 289.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 290.5,
+   "fin": 294.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 296.0,
+   "fin": 300.0
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 301.5,
+   "fin": 305.5
+  },
+  {
+   "clase": "pigua",
+   "ini": 307.0,
+   "fin": 311.0
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 312.5,
+   "fin": 316.5
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 318.0,
+   "fin": 322.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 323.5,
+   "fin": 327.5
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 329.0,
+   "fin": 333.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 334.5,
+   "fin": 339.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 341.0,
+   "fin": 346.0
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 347.5,
+   "fin": 351.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 353.0,
+   "fin": 357.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 358.5,
+   "fin": 362.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 364.0,
+   "fin": 369.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 370.5,
+   "fin": 375.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 377.0,
+   "fin": 382.0
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 383.5,
+   "fin": 387.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 389.0,
+   "fin": 393.0
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 394.5,
+   "fin": 398.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 400.0,
+   "fin": 404.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 405.5,
+   "fin": 410.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 412.0,
+   "fin": 416.0
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 417.5,
+   "fin": 421.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 423.0,
+   "fin": 427.0
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 428.5,
+   "fin": 432.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 434.0,
+   "fin": 439.0
+  },
+  {
+   "clase": "pigua",
+   "ini": 440.5,
+   "fin": 444.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 446.0,
+   "fin": 450.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 451.5,
+   "fin": 455.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 457.0,
+   "fin": 461.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 462.5,
+   "fin": 467.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 469.0,
+   "fin": 473.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 474.5,
+   "fin": 478.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 480.0,
+   "fin": 484.0
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 485.5,
+   "fin": 489.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 491.0,
+   "fin": 495.0
+  },
+  {
+   "clase": "pigua",
+   "ini": 496.5,
+   "fin": 500.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 502.0,
+   "fin": 506.0
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 507.5,
+   "fin": 511.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 513.0,
+   "fin": 517.0
+  },
+  {
+   "clase": "garrapatero-comun",
+   "ini": 518.5,
+   "fin": 522.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 524.0,
+   "fin": 528.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 529.5,
+   "fin": 533.5
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 535.0,
+   "fin": 539.0
+  },
+  {
+   "clase": "pigua",
+   "ini": 540.5,
+   "fin": 544.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 546.0,
+   "fin": 551.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 552.5,
+   "fin": 557.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 559.0,
+   "fin": 563.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 564.5,
+   "fin": 568.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 570.0,
+   "fin": 574.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 575.5,
+   "fin": 580.5
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 582.0,
+   "fin": 587.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 588.5,
+   "fin": 592.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 594.0,
+   "fin": 598.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 599.5,
+   "fin": 603.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 605.0,
+   "fin": 609.0
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 610.5,
+   "fin": 614.5
+  },
+  {
+   "clase": "bichofue-griton",
+   "ini": 616.0,
+   "fin": 620.0
+  },
+  {
+   "clase": "lora-andina",
+   "ini": 621.5,
+   "fin": 625.5
+  },
+  {
+   "clase": "azulejo-comun",
+   "ini": 627.0,
+   "fin": 631.0
+  },
+  {
+   "clase": "ave-no-registrada",
+   "ini": 632.5,
+   "fin": 637.5
+  },
+  {
+   "clase": "pellar-comun",
+   "ini": 639.0,
+   "fin": 643.0
+  }
+ ]
+}
