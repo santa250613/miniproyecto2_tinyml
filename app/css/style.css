@@ -364,3 +364,7 @@ footer .credito{margin-top:6px;font-size:11px;opacity:.6}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .float-bird{display:none!important}
 }
+
+/* Reproductor YouTube sin titulo (el nombre regalaria la respuesta) */
+.yt-crop{width:360px;max-width:100%;height:210px;overflow:hidden;border-radius:12px;margin:0 auto;position:relative;border:1px solid rgba(87,180,111,.4);background:#000}
+.yt-crop .yt-clean{margin-top:-64px;border:0;pointer-events:none}

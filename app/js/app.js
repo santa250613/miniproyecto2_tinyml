@@ -62,7 +62,7 @@ const pick = a => a[Math.floor(Math.random()*a.length)];
 // tocar el canto: iframe de YouTube (sin autoplay hasta el clic)
 $('#btn-tocar').onclick = ()=>{
   $('#player').innerHTML =
-    `<iframe width="360" height="200" style="border-radius:12px" src="https://www.youtube.com/embed/${correcta.yt}?autoplay=1&controls=1" title="canto" allow="autoplay" allowfullscreen></iframe>`;
+    `<div class="yt-crop"><iframe width="360" height="340" class="yt-clean" src="https://www.youtube-nocookie.com/embed/${correcta.yt}?autoplay=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1" title="canto" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
   $('#btn-tocar').disabled = true;
 };
 
