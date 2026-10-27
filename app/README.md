@@ -28,7 +28,7 @@ python3 -m http.server 8000
 | Modo | Qué hace | Requisito |
 |---|---|---|
 | 🦜 Desafío de Aves | Escucha un canto y adivina cuál ave es (4 opciones, marcador y racha) | Nada — funciona de una |
-| 🎯 Identificador IA | Graba 3 s por micrófono y una red neuronal dirá qué ave es | Modelo en `app/modelo/` (ver README raíz, pasos "modelo") |
+| 🎯 Identificador IA | Graba 7 s por micrófono y una red neuronal dirá qué ave es | Modelo en `app/modelo/` (ver README raíz, pasos "modelo") |
 
 ## Contenido de esta carpeta
 - `index.html` — la app (2 pestañas)

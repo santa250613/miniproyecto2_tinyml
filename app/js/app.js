@@ -163,6 +163,8 @@ function cargaModelo(){
 }
 cargaModelo();
 
+const DURACION_S=7;   // segundos de grabación (los cantos necesitan tiempo para aparecer)
+
 $('#btn-grabar').onclick = async ()=>{
   if(!navigator.mediaDevices){alert('Este navegador no da acceso al micrófono. Usa Chrome + HTTPS o localhost.');return;}
   const btn=$('#btn-grabar'); btn.disabled=true;
@@ -186,15 +188,15 @@ $('#btn-grabar').onclick = async ()=>{
       if(modelo && etiquetas){inferir(x);} else {
         $('#estado-mic').textContent='🎙️ Audio capturado, pero el modelo no está cargado (sube modelo_aves.zip a app/modelo/).';
       }
-      btn.disabled=false; btn.textContent='🎙️ Grabar 3 s';
+      btn.disabled=false; btn.textContent=`🎙️ Grabar ${DURACION_S} s`;
     };
     rec.start();
-    btn.textContent='⏺ Grabando… 3 s';
+    btn.textContent=`⏺ Grabando… ${DURACION_S} s`;
     let ms=0; const t0=Date.now();
-    const iv=setInterval(()=>{ms=Math.min(3000,Date.now()-t0);
-      btn.textContent=`⏺ Grabando… ${(3000-ms)/1000|0}s`;},100);
-    setTimeout(()=>{clearInterval(iv); rec.stop();},3000);
-  }catch(err){ btn.disabled=false; btn.textContent='🎙️ Grabar 3 s';
+    const iv=setInterval(()=>{ms=Math.min(DURACION_S*1000,Date.now()-t0);
+      btn.textContent=`⏺ Grabando… ${Math.ceil((DURACION_S*1000-ms)/1000)}s`;},100);
+    setTimeout(()=>{clearInterval(iv); rec.stop();},DURACION_S*1000);
+  }catch(err){ btn.disabled=false; btn.textContent=`🎙️ Grabar ${DURACION_S} s`;
     $('#estado-mic').textContent='❌ No se pudo usar el micrófono: '+(err.message||err); $('#estado-mic').className='estado warn';}
 };
 

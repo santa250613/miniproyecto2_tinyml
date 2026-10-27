@@ -30,7 +30,7 @@
         ▼
   🌐 APP WEB "Modo Cazador"
         · Desafío de Aves: suena un canto (YouTube embebido) y adivinas
-        · Identificador: grabas 3 s con el micrófono → MFCC en el navegador
+        · Identificador: grabas 7 s con el micrófono → MFCC en el navegador
           → modelo TinyML (tfjs) → "Es un Bichofué gritón (94%)"
 ```
 
