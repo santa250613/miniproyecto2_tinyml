@@ -236,6 +236,9 @@ async function inferir(x){
   let pares=etiquetas.clases.map((c,i)=>({c,p:probs[i]})).sort((a,b)=>b.p-a.p);
   const mejor=pares[0];
   let pico=0; for(let i=0;i<x.length;i++) pico=Math.max(pico,Math.abs(x[i]));
+  // normalizar como se hace en el entrenamiento (cargar_wav divide por el maximo):
+  // sin esto, un canto que llega bajo por el aire queda en otra escala que el modelo nunca vio
+  if(pico>0){ const g=1/pico; for(let i=0;i<x.length;i++) x[i]*=g; }
   const silencio=pico<PICO_MIN;
   const noRegistrada= silencio || mejor.c===NO_REG || mejor.p<UMBRAL;
 
