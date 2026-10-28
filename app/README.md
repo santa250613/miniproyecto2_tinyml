@@ -36,4 +36,4 @@ python3 -m http.server 8000
 - `js/app.js` — lógica: desafío + MFCC en JavaScript + TF.js
 - `modelo/` — ✅ modelo ya entrenado (model.json + labels.json + pesos tfjs, 91 clips)
 
-IA para Móviles · UAO 2026-2 · Sebastián Santana · audios CC de xeno-canto.org
+IA para Móviles · UAO 2026-2 · Sebastián Santana, Juan Camilo Díaz y César Armando Reyes · audios CC de xeno-canto.org

@@ -1,6 +1,7 @@
 # 🐦 Cantos de Aves — TinyML (Miniproyecto 2)
 
-> IA para Móviles y Embebidos · UAO 2026-2 · Sebastián Santana
+> IA para Móviles y Embebidos · UAO 2026-2 · Sebastián Santana, Juan Camilo Díaz y César Armando Reyes
+> 📄 Informe IEEE: [docs/Informe_Miniproyecto2_Aves_TinyML.pdf](docs/Informe_Miniproyecto2_Aves_TinyML.pdf) ([.docx](docs/Informe_Miniproyecto2_Aves_TinyML.docx))
 > Inspirado en la metodología del [Miniproyecto 1 — Bartender TinyML](https://github.com/caesar-dat-com/miniproyecto1-tinyml)
 
 **La idea:** un sistema TinyML que **escucha el canto de 6 aves comunes del Valle del Cauca y las identifica**, con la misma metodología del Ejercicio KWS (MFCC a mano en numpy + MLP). La demo final es una **app web "Modo Cazador"** estilo parque zoológico: escucha un canto, adivina cuál ave es, y luego **identifica con el microfono** usando el modelo entrenado.
