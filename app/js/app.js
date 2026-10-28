@@ -1,4 +1,4 @@
-/* 🐦 Modo Cazador — app.js
+/* Modo Cazador — app.js
    Modo Zoológico: quiz con cantos (YouTube embebido)
    Identificador IA: micrófono → MFCC en JS (metodología KWS) → modelo tfjs en modelo/ */
 
@@ -114,7 +114,7 @@ function dftReal(x){ // |X_k|^2 para k=0..257
 }
 // Hasta K_VENT ventanas de ~1 s sin solaparse, las de más energía (bloques de 1000 muestras).
 // Solo cuentan bloques con ≥ REL_VENT (50 %) de la energía del más fuerte (evita meter silencios).
-// Copia exacta de ventanas_app() del notebook.
+// Igual que ventanas_app() del notebook.
 const K_VENT=3, REL_VENT=0.50;
 function ventanasApp(x, n=N_FRAMES*160){
   if(x.length<=n){const y=new Float32Array(n); y.set(x); return [y];}
@@ -246,7 +246,7 @@ function dibujaOnda(x){
 const NO_REG='ave-no-registrada', UMBRAL=0.40, PICO_MIN=0.02;
 
 async function inferir(x){
-  // normalizar PRIMERO (mismo preprocesamiento del entrenamiento: cargar_wav divide por el maximo)
+  // normalizar primero (mismo preprocesamiento del entrenamiento: cargar_wav divide por el maximo)
   let pico=0; for(let i=0;i<x.length;i++) pico=Math.max(pico,Math.abs(x[i]));
   if(pico>0){ const g=1/pico; for(let i=0;i<x.length;i++) x[i]*=g; }
   const silencio=pico<PICO_MIN;

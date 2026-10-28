@@ -1,12 +1,15 @@
-# 🐦 Cantos de Aves — TinyML (Miniproyecto 2)
+# Cantos de Aves con TinyML (Miniproyecto 2)
 
-> IA para Móviles y Embebidos · UAO 2026-2 · Sebastián Santana, Juan Camilo Díaz y César Armando Reyes
-> 📄 Informe IEEE: [docs/Informe_Miniproyecto2_Aves_TinyML.pdf](docs/Informe_Miniproyecto2_Aves_TinyML.pdf) ([.docx](docs/Informe_Miniproyecto2_Aves_TinyML.docx))
-> Inspirado en la metodología del [Miniproyecto 1 — Bartender TinyML](https://github.com/caesar-dat-com/miniproyecto1-tinyml)
+IA para Móviles y Embebidos · UAO 2026-2 · Sebastián Santana, Juan Camilo Díaz y César Armando Reyes
 
-**La idea:** un sistema TinyML que **escucha el canto de 6 aves comunes del Valle del Cauca y las identifica**, con la misma metodología del Ejercicio KWS (MFCC a mano en numpy + MLP). La demo final es una **app web "Modo Cazador"** estilo parque zoológico: escucha un canto, adivina cuál ave es, y luego **identifica con el microfono** usando el modelo entrenado.
+Informe: [docs/Informe_Miniproyecto2_Aves_TinyML.pdf](docs/Informe_Miniproyecto2_Aves_TinyML.pdf) ([versión Word](docs/Informe_Miniproyecto2_Aves_TinyML.docx))
+App: https://santa250613.github.io/miniproyecto2_tinyml/
 
-## 🎯 Las 6 aves
+## Idea
+
+Un sistema TinyML que escucha el canto de 6 aves comunes del Valle del Cauca y dice cuál es, o "ave no registrada" si es otro sonido. Usamos la misma metodología del ejercicio KWS: MFCC calculados a mano en numpy y una red MLP pequeña. La demo es una app web, "Modo Cazador", con dos modos: un quiz para adivinar el ave por su canto y un identificador que usa el micrófono del celular.
+
+## Las 6 aves
 
 | # | Ave | Canto de referencia |
 |---|-----|---------------------|
@@ -17,59 +20,46 @@
 | 5 | Azulejo común | https://www.youtube.com/shorts/xMFmLZLevJY |
 | 6 | Lora andina | https://www.youtube.com/shorts/uJaGIdL4ZSQ |
 
-## 🧭 Arquitectura
+## Cómo funciona
 
 ```
-  🎙️ GRABACIONES (celular / Edge Impulse)
-        │  clips de 3–5 s por ave, varias sesiones
-        ▼
-  📓 GOOGLE COLAB — notebook 02
-        MFCC a mano en numpy (metodología KWS)
-        → Experimento A (split aleatorio)  ← trampa: fuga por sesión
-        → Experimento B (leave-one-session-out) ← métrica honesta
-        → Keras → export TensorFlow.js + labels
-        ▼
-  🌐 APP WEB "Modo Cazador"
-        · Desafío de Aves: suena un canto (YouTube embebido) y adivinas
-        · Identificador: grabas 7 s con el micrófono → MFCC en el navegador
-          → modelo TinyML (tfjs) → "Es un Bichofué gritón (94%)"
+Grabaciones (xeno-canto, Arduino Nano 33 BLE Sense con Edge Impulse, celular)
+    |  clips etiquetados por ave y por sesión (_S<n>_)
+    v
+Notebook en Colab
+    MFCC en numpy -> MLP 1274-64-7
+    Experimento A (split aleatorio) vs. Experimento B (una sesión fuera)
+    exporta el modelo a TensorFlow.js
+    v
+App web "Modo Cazador" (celular)
+    graba 7 s -> MFCC en JavaScript -> modelo -> "Es un Bichofué gritón (94 %)"
 ```
 
-## 📁 Estructura
+## Estructura
 
 ```
-├── README.md                  ← este archivo
+├── README.md
 ├── docs/
-│   ├── metodologia.md         ← decisiones del pipeline (por qué MFCC, por qué sesión)
-│   └── presentacion.md        ← guion de la presentación (5 min)
-├── edge-impulse/
-│   └── README.md              ← guía EXACTA para grabar el dataset (paso a paso)
+│   └── Informe_Miniproyecto2_Aves_TinyML.pdf / .docx   informe IEEE
+├── dataset/                        zips de audio por sesión (S1 a S7)
+├── edge-impulse/                   grabación del dataset con el Nano 33 BLE Sense
+├── celular/                        sesión de grabación con el celular y recortes de YouTube
 ├── notebooks/
-│   └── 02_entrenamiento_aves.ipynb ← Colab: datos → MFCC → MLP → A vs B → export
+│   └── 02_entrenamiento_aves.ipynb datos -> MFCC -> MLP -> A vs. B -> exportar
 └── app/
-    ├── index.html             ← la app "Modo Cazador"
+    ├── index.html                  app "Modo Cazador"
+    ├── sesion.html                 página para grabar sesiones largas con el celular
     ├── css/style.css
-    ├── js/app.js              ← desafío + grabación + MFCC en JS + inferencia tfjs
-    └── modelo/                ← AQUÍ va el modelo exportado por el Colab
-        └── (model.json + grupo1-*.bin + labels.json)
+    ├── js/app.js                   quiz + grabación + MFCC en JS + inferencia
+    └── modelo/                     modelo exportado (model.json, pesos, labels.json)
 ```
 
-## 🚀 Cómo correr
+## Cómo correrlo
 
-1. **Dataset** → dos vías:
-   - **Edge Impulse (recomendada)**: subir el dataset zip del repo (`dataset/dataset_aves_nano.zip`, 91 clips 15-16 por ave) a *Data acquisition → Uploader* y grabar clips propios según `edge-impulse/README.md`. La base de datos vive en EI, como el KWS.
-   - **Directa**: el zip ya está en el repo — tu dataset nuevo (`dataset/dataset_aves_nano.zip`, 91 clips, 16 kHz, ~15-16 por ave): usa `DATA_URL = 'https://raw.githubusercontent.com/santa250613/miniproyecto2_tinyml/main/dataset/dataset_aves_nano.zip'` (o el de 80 clips: `.../dataset/dataset_aves.zip`), o ejecuta sin URL (paths locales).
-2. **Entrenar en Colab** → [abrir el notebook en Colab](https://colab.research.google.com/github/santa250613/miniproyecto2_tinyml/blob/main/notebooks/02_entrenamiento_aves.ipynb) → Entorno de ejecución → Ejecutar todo (descarga solo los 6 zips de `dataset/`) → se descarga `modelo_aves.zip`.
-3. **Descomprimir** el zip en una carpeta temporal y **mover el contenido de `modelo_export/`** (model.json, group*.shard, labels.json) directamente a `app/modelo/` — app.js carga `modelo/model.json` y `modelo/labels.json`.
-4. **Abrir la app** → `python3 -m http.server` en `app/` (necesita servir por HTTP para el micrófono) → `http://localhost:8000`.
-5. O publicar con **GitHub Pages** → la app queda en línea para la demo.
+1. **Entrenar:** abrir el [notebook en Colab](https://colab.research.google.com/github/santa250613/miniproyecto2_tinyml/blob/main/notebooks/02_entrenamiento_aves.ipynb) y darle *Entorno de ejecución → Ejecutar todo*. Descarga solo los zips de `dataset/` y al final baja `modelo_aves.zip`.
+2. **Actualizar el modelo:** descomprimir `modelo_aves.zip` dentro de `app/modelo/`.
+3. **Abrir la app:** usar el enlace de GitHub Pages, o en local `python3 -m http.server` dentro de `app/` y entrar a `http://localhost:8000` (el micrófono necesita HTTP o HTTPS).
 
-## 🔑 Puntos fuertes para la sustentación
+## Créditos
 
-- Metodología **validada con el KWS**: front-end MFCC manual (ventana 25 ms / salto 10 ms, 40 filtros mel, 13 coeficientes), 1 s de audio útil → 1.274 features, modelo chico apto para embebido.
-- **Split por sesión obligatorio**: los cantos se graban en tomas continuas; un split aleatorio filtra por sesión y miente (Experimento A vs B, como en el KWS: 100% vs 85,8%).
-- Cero TensorFlow en el entrenamiento del core (numpy puro) → luego la misma red pasa a **TFLite/tfjs** para el edge y el navegador.
-
-## 📜 Licencia / créditos
-
-Cantos de referencia: videos públicos de YouTube citados arriba. Clips del dataset: **xeno-canto.org** (grabaciones comunitarias CC, 4 por ave). Dataset propio.
+Cantos de referencia: videos públicos de YouTube citados arriba. Clips del dataset: grabaciones con licencia CC de [xeno-canto.org](https://xeno-canto.org) y grabaciones propias con el Arduino Nano 33 BLE Sense y el celular. Metodología basada en el [Miniproyecto 1 — Bartender TinyML](https://github.com/caesar-dat-com/miniproyecto1-tinyml).
